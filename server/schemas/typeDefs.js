@@ -18,9 +18,13 @@ type Job {
     softSkillsRequired: [String]
     jobLink: String
     status: String
+    username: String
 }
 
 type Query {
-    
+    users: [User]
+    user(username: String): User
+    jobs(username: String) : [Jobs]
+    job(_id: ID!): Job
 }
 `
