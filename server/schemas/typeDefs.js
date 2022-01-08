@@ -1,14 +1,12 @@
 const { gql } = require('apollo-server-express');
 
+// to do: add back security questions and answers
+
 const typeDefs = gql`
 type User {
     _id: ID
     username: String
     email: String
-    questionOne: String
-    answerOne: String
-    questionTwo: String
-    answerTwo: String
     jobCount: Int
     jobs: [Job]
 }
@@ -23,7 +21,9 @@ type Job {
     companyName: String
     jobTitle: String
     dateApplied: String
+    techRequiredCount: Int
     techRequired: [String]
+    softSkillsRequiredCount: Int
     softSkillsRequired: [String]
     jobLink: String
     status: String
@@ -32,7 +32,7 @@ type Job {
 
 type Query {
     users: [User]
-    user(username: String): User
+    user(username: String!): User
     job(_id: ID!): Job
 }
 
@@ -41,22 +41,17 @@ type Mutation {
     addUser(
         username: String!, 
         email: String!, 
-        password: String!, 
-        questionOne: String!,
-        answerOne: String!,
-        questionTwo: String!,
-        answerTwo: String!
+        password: String!
         ): Auth
     addJob(
         companyName: String!,
         jobTitle: String!,
-        dateApplied: String,
         techRequired: [String],
         softSkillsRequired: [String],
         jobLink: String,
     ): Job
     deleteUser(username: String!, password: String!): User
-    deleteJob(_id: ID!, username: String!): User
+    deleteJob(jobId: ID!): User
     updatePassword(username: String!, password: String!): User
     updateJob(
         jobId: ID!,

@@ -56,8 +56,12 @@ const resolvers = {
             return updatedUser
         },
         addJob: async (parent, args, context) => {
+            console.log('args', args)
+
             if (context.user) {
                 const job = await Job.create ({...args, username: context.user.username});
+
+                
 
                 await User.findByIdAndUpdate(
                     {_id: context.user._id},
@@ -71,10 +75,16 @@ const resolvers = {
         },
         updateJob: async (parent, args, context) => {
             if (context.user) {
-                const updatedJob = await Job.findOneAndUpdate(
-                    {_id: args.jobId},
-                    
+                console.log(args)
+            }
+        },
+        deleteJob: async (parent, {jobId}, context) => {
+            if(context.user) {
+                const deletedJob = await Job.findByIdAndDelete(
+                    {_id: jobId}
                 )
+
+                return deletedJob
             }
         }
     }

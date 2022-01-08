@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const dateFormat = require('../utils/dateFormat');
 
 const jobSchema = new Schema(
     {
@@ -15,21 +16,21 @@ const jobSchema = new Schema(
         },
         dateApplied: {
             type: Date,
-            default: Date.now
+            default: Date.now,
+            get: timestamp => dateFormat(timestamp)
         },
         techRequired: [
             {
                 type: String,
-                unique: true,
                 required: false,
-
+                default: []
             }
         ],
         softSkillsRequired: [
             {
                 type: String,
-                unique: true,
                 required: false,
+                default: []
             }
         ],
         jobLink: {
@@ -47,7 +48,8 @@ const jobSchema = new Schema(
     },
     {
         toJSON: {
-            virtuals: true
+            virtuals: true,
+            getters: true
         }
     }
 );
