@@ -54,21 +54,19 @@ type Mutation {
         techRequired: [String],
         softSkillsRequired: [String],
         jobLink: String,
-        username: String!
-    ): User
+    ): Job
     deleteUser(username: String!, password: String!): User
     deleteJob(_id: ID!, username: String!): User
     updatePassword(username: String!, password: String!): User
     updateJob(
-        _id: ID!,
+        jobId: ID!,
         companyName: String,
         jobTitle: String,
         dateApplied: String,
         techRequired: [String],
         softSkillsRequired: [String],
-        jobLink: String,
-        username: String!
-    ) : User
+        jobLink: String
+    ) : Job
 }
 `
 
