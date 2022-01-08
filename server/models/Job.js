@@ -38,7 +38,7 @@ const jobSchema = new Schema(
         },
         status: {
             type: String,
-            default: 'applied',
+            default: 'Applied',
         },
         username: {
             type: String,
