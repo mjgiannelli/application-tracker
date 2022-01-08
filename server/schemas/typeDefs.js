@@ -33,7 +33,6 @@ type Job {
 type Query {
     users: [User]
     user(username: String): User
-    jobs(username: String) : [Job]
     job(_id: ID!): Job
 }
 
@@ -72,3 +71,5 @@ type Mutation {
     ) : User
 }
 `
+
+module.exports = typeDefs;
