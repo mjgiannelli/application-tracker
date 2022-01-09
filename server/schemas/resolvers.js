@@ -203,13 +203,15 @@ const resolvers = {
                 throw new AuthenticationError('Password provided is incorrect');
             }
 
-            console.log('username', user.username)
+            const deletedUser = await User.findOneAndDelete(
+                { email: email }
+            )
 
-            // const deletedUser = await User.findOneAndDelete(
-            //     { email: email }
-            // )
+            const deletedJobs = await Job.deleteMany(
+                {username: user.username}
+            )
 
-            // return deletedUser
+            return deletedUser
         }
     }
 };
