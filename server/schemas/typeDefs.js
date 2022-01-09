@@ -33,6 +33,7 @@ type Job {
 type Query {
     users: [User]
     user(username: String!): User
+    jobs: [Job]
     job(jobId: ID!): Job
 }
 
@@ -85,6 +86,10 @@ type Mutation {
         jobId: ID!,
         softSkillsRequired: [String]!
     ) : Job
+    deleteAccount(
+        email: String!,
+        password: String!
+    ) : User
 }
 `
 

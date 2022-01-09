@@ -18,6 +18,9 @@ const resolvers = {
         },
         job: async (parent, { jobId }) => {
             return Job.findOne({ jobId })
+        },
+        jobs: async () => {
+            return Job.find()
         }
     },
     Mutation: {
@@ -186,6 +189,27 @@ const resolvers = {
 
                 return deletedJob
             }
+        },
+        deleteAccount: async (parent, { email, password }) => {
+            const user = await User.findOne({ email });
+
+            if (!user) {
+                throw new AuthenticationError('Incorrect email address');
+            }
+
+            const correctPw = await user.isCorrectPassword(password);
+
+            if (!correctPw) {
+                throw new AuthenticationError('Password provided is incorrect');
+            }
+
+            console.log('username', user.username)
+
+            // const deletedUser = await User.findOneAndDelete(
+            //     { email: email }
+            // )
+
+            // return deletedUser
         }
     }
 };
