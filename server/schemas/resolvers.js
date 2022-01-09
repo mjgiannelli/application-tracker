@@ -43,45 +43,85 @@ const resolvers = {
 
             return { token, user };
         },
-        updatePassword: async (parent, {username, password}, context) => {
+        updatePassword: async (parent, { username, password }, context) => {
 
             const saltRounds = 10;
             password = await bcrypt.hash(password, saltRounds);
 
             const updatedUser = await User.findOneAndUpdate(
-                {username: username},
-                {password: password},
-                {new: true}
+                { username: username },
+                { password: password },
+                { new: true }
             )
             return updatedUser
         },
         addJob: async (parent, args, context) => {
-            console.log('args', args)
 
             if (context.user) {
-                const job = await Job.create ({...args, username: context.user.username});
-
-                
+                const job = await Job.create({ ...args, username: context.user.username });
 
                 await User.findByIdAndUpdate(
-                    {_id: context.user._id},
-                    {$push: {jobs: job._id}},
-                    {new: true}
+                    { _id: context.user._id },
+                    { $push: { jobs: job._id } },
+                    { new: true }
                 );
 
                 return job;
             }
             throw new AuthenticationError('You need to be logged in.')
         },
-        updateJob: async (parent, args, context) => {
+        updateJobCompanyName: async (parent, { jobId, companyName }, context) => {
+            
             if (context.user) {
-                console.log(args)
+                const updatedJob = await Job.findByIdAndUpdate(
+                    { _id: jobId },
+                    { companyName: companyName },
+                    { new: true }
+                )
+                return updatedJob
             }
+            throw new AuthenticationError('You need to be logged in.')
         },
-        deleteJob: async (parent, {jobId}, context) => {
-            if(context.user) {
+        updateJobTitle: async (parent, { jobId, jobTitle }, context) => {
+
+            if (context.user) {
+                const updatedJob = await Job.findByIdAndUpdate(
+                    { _id: jobId },
+                    { jobTitle: jobTitle },
+                    { new: true }
+                )
+                return updatedJob
+            }
+            throw new AuthenticationError('You need to be logged in.')
+        },
+        updateJobStatus: async (parent, { jobId, status }, context) => {
+            
+            if (context.user) {
+                const updatedJob = await Job.findByIdAndUpdate(
+                    { _id: jobId },
+                    { status: status },
+                    { new: true }
+                )
+                return updatedJob
+            }
+            throw new AuthenticationError('You need to be logged in.')
+        },
+        updateJobLink: async (parent, { jobId, jobLink }, context) => {
+            
+            if (context.user) {
+                const updatedJob = await Job.findByIdAndUpdate(
+                    { _id: jobId },
+                    { jobLink: jobLink },
+                    { new: true }
+                )
+                return updatedJob
+            }
+            throw new AuthenticationError('You need to be logged in.')
+        },
+        deleteJob: async (parent, { jobId }, context) => {
+            if (context.user) {
                 const deletedJob = await Job.findByIdAndDelete(
-                    {_id: jobId}
+                    { _id: jobId }
                 )
 
                 return deletedJob

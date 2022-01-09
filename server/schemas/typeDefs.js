@@ -53,16 +53,45 @@ type Mutation {
     deleteUser(username: String!, password: String!): User
     deleteJob(jobId: ID!): User
     updatePassword(username: String!, password: String!): User
-    updateJob(
+    updateJobCompanyName(
         jobId: ID!,
-        companyName: String,
-        jobTitle: String,
-        dateApplied: String,
-        techRequired: [String],
-        softSkillsRequired: [String],
-        jobLink: String
+        companyName: String!
+    ) : Job
+    updateJobTitle(
+        jobId: ID!,
+        jobTitle: String! 
+    ) : Job
+    updateJobStatus(
+        jobId: ID!,
+        status: String!  
+    ) : Job
+    updateJobTechRequired(
+        jobId: ID!,
+        techRequired: [String]!
+    ) : Job
+    updateJobSoftSkillsRequired(
+        jobId: ID!,
+        softSkillsRequired: [String]!
+    ) : Job
+    updateJobLink(
+        jobId: ID!,
+        jobLink: String!  
     ) : Job
 }
 `
 
 module.exports = typeDefs;
+
+// mutation updateJob($jobId:ID!, $companyName: String, $jobTitle: String, $techRequired: [String], $softSkillsRequired: [String], $jobLink: String) {
+//     updateJob(jobId: $jobId, companyName: $companyName, jobTitle: $jobTitle, techRequired: $techRequired, softSkillsRequired: $softSkillsRequired, jobLink: $jobLink){
+//         _id
+//     		companyName
+//     		jobTitle
+//     		techRequiredCount
+//     		techRequired
+//         softSkillsRequiredCount
+//     		softSkillsRequired
+//     		jobLink
+//     		username
+//   }
+// }
