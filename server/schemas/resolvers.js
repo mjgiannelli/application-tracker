@@ -148,6 +148,36 @@ const resolvers = {
             }
             throw new AuthenticationError('You need to be logged in.')
         },
+        deleteTechRequired: async (parent, { jobId, techRequired }, context) => {
+
+            if (context.user) {
+
+                console.log('tech', techRequired)
+
+                const updatedJob = await Job.findByIdAndUpdate(
+                    { _id: jobId },
+                    { $pull: { techRequired: { $in: techRequired } } },
+                    { new: true }
+                )
+                return updatedJob
+            }
+            throw new AuthenticationError('You need to be logged in.')
+        },
+        deleteSoftSkillsRequired: async (parent, { jobId, softSkillsRequired }, context) => {
+
+            if (context.user) {
+
+                console.log('tech', softSkillsRequired)
+
+                const updatedJob = await Job.findByIdAndUpdate(
+                    { _id: jobId },
+                    { $pull: { softSkillsRequired: { $in: softSkillsRequired } } },
+                    { new: true }
+                )
+                return updatedJob
+            }
+            throw new AuthenticationError('You need to be logged in.')
+        },
         deleteJob: async (parent, { jobId }, context) => {
             if (context.user) {
                 const deletedJob = await Job.findByIdAndDelete(

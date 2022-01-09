@@ -77,6 +77,14 @@ type Mutation {
         jobId: ID!,
         jobLink: String!  
     ) : Job
+    deleteTechRequired(
+        jobId: ID!,
+        techRequired: [String]!
+    ) : Job
+    deleteSoftSkillsRequired(
+        jobId: ID!,
+        softSkillsRequired: [String]!
+    ) : Job
 }
 `
 
