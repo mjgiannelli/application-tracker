@@ -33,7 +33,7 @@ type Job {
 type Query {
     users: [User]
     user(username: String!): User
-    job(_id: ID!): Job
+    job(jobId: ID!): Job
 }
 
 type Mutation {
@@ -65,11 +65,11 @@ type Mutation {
         jobId: ID!,
         status: String!  
     ) : Job
-    updateJobTechRequired(
+    addTechRequired(
         jobId: ID!,
         techRequired: [String]!
     ) : Job
-    updateJobSoftSkillsRequired(
+    addSoftSkillsRequired(
         jobId: ID!,
         softSkillsRequired: [String]!
     ) : Job
@@ -81,17 +81,3 @@ type Mutation {
 `
 
 module.exports = typeDefs;
-
-// mutation updateJob($jobId:ID!, $companyName: String, $jobTitle: String, $techRequired: [String], $softSkillsRequired: [String], $jobLink: String) {
-//     updateJob(jobId: $jobId, companyName: $companyName, jobTitle: $jobTitle, techRequired: $techRequired, softSkillsRequired: $softSkillsRequired, jobLink: $jobLink){
-//         _id
-//     		companyName
-//     		jobTitle
-//     		techRequiredCount
-//     		techRequired
-//         softSkillsRequiredCount
-//     		softSkillsRequired
-//     		jobLink
-//     		username
-//   }
-// }

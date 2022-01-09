@@ -16,8 +16,8 @@ const resolvers = {
                 .select('-__v -password')
                 .populate('jobs')
         },
-        job: async (parent, { _id }) => {
-            return Job.findOne({ _id })
+        job: async (parent, { jobId }) => {
+            return Job.findOne({ jobId })
         }
     },
     Mutation: {
@@ -71,7 +71,7 @@ const resolvers = {
             throw new AuthenticationError('You need to be logged in.')
         },
         updateJobCompanyName: async (parent, { jobId, companyName }, context) => {
-            
+
             if (context.user) {
                 const updatedJob = await Job.findByIdAndUpdate(
                     { _id: jobId },
@@ -95,7 +95,7 @@ const resolvers = {
             throw new AuthenticationError('You need to be logged in.')
         },
         updateJobStatus: async (parent, { jobId, status }, context) => {
-            
+
             if (context.user) {
                 const updatedJob = await Job.findByIdAndUpdate(
                     { _id: jobId },
@@ -107,11 +107,41 @@ const resolvers = {
             throw new AuthenticationError('You need to be logged in.')
         },
         updateJobLink: async (parent, { jobId, jobLink }, context) => {
-            
+
             if (context.user) {
                 const updatedJob = await Job.findByIdAndUpdate(
                     { _id: jobId },
                     { jobLink: jobLink },
+                    { new: true }
+                )
+                return updatedJob
+            }
+            throw new AuthenticationError('You need to be logged in.')
+        },
+        addTechRequired: async (parent, { jobId, techRequired }, context) => {
+
+            if (context.user) {
+
+                console.log('tech', techRequired)
+
+                const updatedJob = await Job.findByIdAndUpdate(
+                    { _id: jobId },
+                    { $push: { techRequired: { $each: techRequired } } },
+                    { new: true }
+                )
+                return updatedJob
+            }
+            throw new AuthenticationError('You need to be logged in.')
+        },
+        addSoftSkillsRequired: async (parent, { jobId, softSkillsRequired }, context) => {
+
+            if (context.user) {
+
+                console.log('tech', softSkillsRequired)
+
+                const updatedJob = await Job.findByIdAndUpdate(
+                    { _id: jobId },
+                    { $push: { softSkillsRequired: { $each: softSkillsRequired } } },
                     { new: true }
                 )
                 return updatedJob
