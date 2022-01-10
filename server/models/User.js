@@ -23,6 +23,22 @@ const userSchema = new Schema(
             minlength: 8,
             maxlength: 100
         },
+        questionOne: {
+            type: String,
+            require: true
+          },
+          answerOne: {
+            type: String,
+            require: true
+          },
+          questionTwo: {
+            type: String,
+            require: true
+          },
+          answerTwo: {
+            type: String,
+            require: true
+          },
         jobs: [
             {
                 type: Schema.Types.ObjectId,
