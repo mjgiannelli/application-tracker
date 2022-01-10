@@ -22,6 +22,7 @@ type Job {
     _id: ID,
     companyName: String
     jobTitle: String
+    industry: String
     dateApplied: String
     techRequiredCount: Int
     techRequired: [String]
@@ -53,6 +54,7 @@ type Mutation {
     addJob(
         companyName: String!,
         jobTitle: String!,
+        industry: String!
         techRequired: [String],
         softSkillsRequired: [String],
         jobLink: String,
@@ -63,6 +65,10 @@ type Mutation {
     updateJobCompanyName(
         jobId: ID!,
         companyName: String!
+    ) : Job
+    updateJobIndustry(
+        jobId: ID!,
+        industry: String!
     ) : Job
     updateJobTitle(
         jobId: ID!,

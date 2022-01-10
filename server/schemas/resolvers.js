@@ -85,6 +85,18 @@ const resolvers = {
             }
             throw new AuthenticationError('You need to be logged in.')
         },
+        updateJobIndustry: async (parent, { jobId, industry }, context) => {
+
+            if (context.user) {
+                const updatedJob = await Job.findByIdAndUpdate(
+                    { _id: jobId },
+                    { industry: industry },
+                    { new: true }
+                )
+                return updatedJob
+            }
+            throw new AuthenticationError('You need to be logged in.')
+        },
         updateJobTitle: async (parent, { jobId, jobTitle }, context) => {
 
             if (context.user) {

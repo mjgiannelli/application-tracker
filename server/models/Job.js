@@ -12,7 +12,14 @@ const jobSchema = new Schema(
         jobTitle: {
             type: String,
             required: true,
-
+            minlength: 1,
+            maxlength: 50
+        },
+        industry: {
+            type: String,
+            required: true,
+            minlength: 1,
+            maxlength: 50
         },
         dateApplied: {
             type: Date,
@@ -23,23 +30,31 @@ const jobSchema = new Schema(
             {
                 type: String,
                 required: false,
-                default: []
+                default: [],
+                minlength: 1,
+                maxlength: 50
             }
         ],
         softSkillsRequired: [
             {
                 type: String,
                 required: false,
-                default: []
+                minlength: 1,
+                maxlength: 50
             }
         ],
         jobLink: {
             type: String,
-            required: false
+            required: false,
+            minlength: 1,
+            maxlength: 250
         },
         status: {
             type: String,
             default: 'Applied',
+            required: false,
+            minlength: 1,
+            maxlength: 50
         },
         username: {
             type: String,
@@ -54,15 +69,15 @@ const jobSchema = new Schema(
     }
 );
 
-jobSchema.pre('validate techRequired', function(next) {
-    if(this.techRequired.length > 25) throw('Tech required list exceeds 25 items.');
-    
+jobSchema.pre('validate techRequired', function (next) {
+    if (this.techRequired.length > 25) throw ('Tech required list exceeds 25 items.');
+
     next();
 });
 
-jobSchema.pre('validate softSkillsRequired', function(next) {
-    if(this.softSkillsRequired.length > 50) throw('Soft skills required list exceeds 50 items.');
-    
+jobSchema.pre('validate softSkillsRequired', function (next) {
+    if (this.softSkillsRequired.length > 50) throw ('Soft skills required list exceeds 50 items.');
+
     next();
 });
 
